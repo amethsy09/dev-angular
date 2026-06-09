@@ -1,1 +1,76 @@
-<p>user-storie works!</p>
+<h1>Fit Track Pro</h1>
+
+<div>
+
+  <h3>Calories : {{ totalCalories() }} kcal</h3>
+
+  <h3>Eau : {{ totalEau() }} ml</h3>
+
+  <h3>Bilan restant : {{ bilanRestant() }} kcal</h3>
+
+</div>
+
+@if (objectifAtteint()) {
+
+  <p>Objectif Santé Atteint </p>
+
+} @else if (alerteDeshydratation()) {
+
+  <p>Attention : moins de 1500 ml d'eau !</p>
+
+}
+
+<hr>
+
+<h2>Ajouter une activité</h2>
+
+<input
+  type="text"
+  placeholder="Nom"
+  [ngModel]="nouveauNom()"
+  (ngModelChange)="nouveauNom.set($event)"
+>
+
+<select
+  [ngModel]="nouveauType()"
+  (ngModelChange)="nouveauType.set($event)"
+>
+  <option value="SPORT">SPORT</option>
+  <option value="HYDRATATION">HYDRATATION</option>
+</select>
+
+<input
+  type="number"
+  [ngModel]="nouvelleValeur()"
+  (ngModelChange)="nouvelleValeur.set(+$event)"
+>
+
+<button (click)="ajouterActivite()">
+  Ajouter
+</button>
+
+<hr>
+
+<h2>Journal</h2>
+
+@for (activite of activites(); track activite.id) {
+
+  <div>
+
+    {{ activite.nom }}
+
+    -
+
+    {{ activite.type }}
+
+    -
+
+    {{ activite.valeur }}
+
+    <button (click)="supprimer(activite.id)">
+      X
+    </button>
+
+  </div>
+
+}
